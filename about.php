@@ -17,8 +17,8 @@
 /**
  * About recent badges plugin
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,8 +28,8 @@ require_login();
 $context = context_system::instance();
 
 $pageparams = array();
-admin_externalpage_setup('block_bs_recent_badges_about');
-$siteurl = new moodle_url('/blocks/bs_recent_badges/about.php', $pageparams);
+admin_externalpage_setup('block_mybadges_about');
+$siteurl = new moodle_url('/blocks/mybadges/about.php', $pageparams);
 
 $PAGE->set_url($siteurl);
 $PAGE->set_context($context);
@@ -53,14 +53,14 @@ $params = array('badgeenrol' => html_writer::link('https://moodle.org/plugins/en
         'Badge Ladder', array('target' => '_blank')));
 
 $paypalbox = html_writer::div($paypalhtml, 'donation-button');
-$abouttext = html_writer::div(get_string('abouttext', 'block_bs_recent_badges', $params), 'about-text');
-$donationtext = html_writer::div(get_string('donationtext', 'block_bs_recent_badges'), 'donation-text');
+$abouttext = html_writer::div(get_string('abouttext', 'block_mybadges', $params), 'about-text');
+$donationtext = html_writer::div(get_string('donationtext', 'block_mybadges'), 'donation-text');
 
-$params = array('aboutlink' => html_writer::link('https://moodle.org/plugins/block_bs_recent_badges',
-    get_string('plugindirectory', 'block_bs_recent_badges'), array('target' => '_blank')),
+$params = array('aboutlink' => html_writer::link('https://moodle.org/plugins/block_mybadges',
+    get_string('plugindirectory', 'block_mybadges'), array('target' => '_blank')),
     'aboutmail' => html_writer::link('mailto:moodle@matthiasschwa.be', 'moodle@matthiasschwa.be'));
 
-$aboutfeedback = html_writer::div(get_string('aboutfeedbacktext', 'block_bs_recent_badges', $params), 'aboutfeedback-text');
+$aboutfeedback = html_writer::div(get_string('aboutfeedbacktext', 'block_mybadges', $params), 'aboutfeedback-text');
 
 echo $OUTPUT->box($abouttext.$aboutfeedback.$donationtext.$paypalbox, 'about-box');
 echo $OUTPUT->footer();

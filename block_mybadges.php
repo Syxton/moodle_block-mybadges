@@ -17,8 +17,8 @@
 /**
  * Main file of recent badges plugin. Displays recently awarded badges.
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,10 +29,10 @@ require_once(dirname(__FILE__).'/lib.php');
 /**
  * Displays recent badges
  */
-class block_bs_recent_badges extends block_base {
+class block_mybadges extends block_base {
 
     public function init() {
-        $this->title = get_string('pluginname', 'block_bs_recent_badges');
+        $this->title = $this->config->title;
     }
 
     public function instance_allow_multiple() {
@@ -59,7 +59,7 @@ class block_bs_recent_badges extends block_base {
 
     public function specialization() {
         if (empty($this->config->title)) {
-            $this->title = get_string('pluginname', 'block_bs_recent_badges');
+            $this->title = get_string('pluginname', 'block_mybadges');
         } else {
             $this->title = $this->config->title;
         }
@@ -110,27 +110,27 @@ class block_bs_recent_badges extends block_base {
             $courseid = null;
         }
 
-        if (get_config('block_bs_recent_badges')->allowedmodus != 'onlysystem'
+        if (get_config('block_mybadges')->allowedmodus != 'onlysystem'
             and $this->config->numberofcoursebadges > 0
-            and $coursebadges = block_bs_recent_badges_get_issued_badges($courseid, $this->config->numberofcoursebadges)
+            and $coursebadges = block_mybadges_get_issued_badges($courseid, $this->config->numberofcoursebadges)
             and $COURSE->id != SITEID) {
 
-            $output = $this->page->get_renderer('block_bs_recent_badges');
-            $this->content->text .= html_writer::tag('div', get_string('latestcoursebadges', 'block_bs_recent_badges'),
+            $output = $this->page->get_renderer('block_mybadges');
+            $this->content->text .= html_writer::tag('div', get_string('latestcoursebadges', 'block_mybadges'),
                 array('class' => 'recent-badges-latestcoursebadges'));
-            $this->content->text .= $output->bs_recent_badges_print_badges_list($coursebadges, $USER->id, $courseid,
+            $this->content->text .= $output->mybadges_print_badges_list($coursebadges, $USER->id, $courseid,
                 $this->config->iconsize, $this->config->allownames);
 
         }
 
-        if (get_config('block_bs_recent_badges')->allowedmodus != 'onlycourse'
+        if (get_config('block_mybadges')->allowedmodus != 'onlycourse'
             and $this->config->numberofsystembadges > 0
-            and $systembadges = block_bs_recent_badges_get_issued_badges(SITEID, $this->config->numberofsystembadges)) {
+            and $systembadges = block_mybadges_get_issued_badges(SITEID, $this->config->numberofsystembadges)) {
 
-            $output = $this->page->get_renderer('block_bs_recent_badges');
-            $this->content->text .= html_writer::tag('div', get_string('latestsystembadges', 'block_bs_recent_badges'),
+            $output = $this->page->get_renderer('block_mybadges');
+            $this->content->text .= html_writer::tag('div', get_string('latestsystembadges', 'block_mybadges'),
                 array('class' => 'recent-badges-latestsystembadges'));
-            $this->content->text .= $output->bs_recent_badges_print_badges_list($systembadges, $USER->id, SITEID,
+            $this->content->text .= $output->mybadges_print_badges_list($systembadges, $USER->id, SITEID,
                 $this->config->iconsize, $this->config->allownames);
 
         }

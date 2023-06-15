@@ -15,8 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

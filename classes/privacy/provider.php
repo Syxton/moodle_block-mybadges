@@ -17,17 +17,17 @@
 /**
  * Privacy Subsystem implementation for recent badges plugin.
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_bs_recent_badges\privacy;
+namespace block_mybadges\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Privacy Subsystem for block_bs_recent_badges implementing null_provider.
+ * Privacy Subsystem for block_mybadges implementing null_provider.
  */
 class provider implements \core_privacy\local\metadata\null_provider {
 

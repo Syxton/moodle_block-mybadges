@@ -17,52 +17,57 @@
 /**
  * Edits an instance of recent badges plugin.
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-class block_bs_recent_badges_edit_form extends block_edit_form {
+class block_mybadges_edit_form extends block_edit_form {
 
     protected function specific_definition($mform) {
         global $COURSE;
 
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
-        if (get_config('block_bs_recent_badges')->allowedmodus != 'onlysystem' and $COURSE->id != SITEID) {
+        $mform->addElement('text', 'title', get_string('configtitle', 'block_html'));
+        $mform->setType('title', PARAM_TEXT);
+    
+        if (get_config('block_mybadges')->allowedmodus != 'onlysystem' and $COURSE->id != SITEID) {
 
             $numberofcoursebadges = array();
             for ($i = 0; $i <= 25; $i++) {
                 $numberofcoursebadges[$i] = $i;
             }
             $mform->addElement('select', 'config_numberofcoursebadges',
-                               get_string('numberofcoursebadges', 'block_bs_recent_badges'), $numberofcoursebadges);
+                               get_string('numberofcoursebadges', 'block_mybadges'), $numberofcoursebadges);
             $mform->setDefault('config_numberofcoursebadges', 6);
 
-            if (get_config('block_bs_recent_badges')->allownames) {
-                $mform->addElement('advcheckbox', 'config_allownames', get_string('allownames', 'block_bs_recent_badges'),
-                                   get_string('allownamesinfo', 'block_bs_recent_badges'), null, array(0, 1));
+            if (get_config('block_mybadges')->allownames) {
+                $mform->addElement('advcheckbox', 'config_allownames', get_string('allownames', 'block_mybadges'),
+                                   get_string('allownamesinfo', 'block_mybadges'), null, array(0, 1));
                 $mform->setDefault('config_allownames', 0);
             }
         }
 
-        if (get_config('block_bs_recent_badges')->allowedmodus != 'onlycourse') {
+        if (get_config('block_mybadges')->allowedmodus != 'onlycourse') {
 
             $numberofsystembadges = array();
             for ($i = 0; $i <= 25; $i++) {
                 $numberofsystembadges[$i] = $i;
             }
             $mform->addElement('select', 'config_numberofsystembadges',
-                               get_string('numberofsystembadges', 'block_bs_recent_badges'), $numberofsystembadges);
+                               get_string('numberofsystembadges', 'block_mybadges'), $numberofsystembadges);
             $mform->setDefault('config_numberofsystembadges', 6);
         }
 
         $iconsize = array(
-            'small' => get_string('small', 'block_bs_recent_badges'),
-            'big' => get_string('big', 'block_bs_recent_badges')
+            'small' => get_string('small', 'block_mybadges'),
+            'small overlapping' => get_string('smalloverlapping', 'block_mybadges'),
+            'big' => get_string('big', 'block_mybadges'),
+            'big overlapping' => get_string('bigoverlapping', 'block_mybadges')
         );
         $mform->addElement('select', 'config_iconsize',
-                           get_string('iconsize', 'block_bs_recent_badges'), $iconsize);
+                           get_string('iconsize', 'block_mybadges'), $iconsize);
         $mform->setDefault('config_iconsize', 'small');
     }
 }

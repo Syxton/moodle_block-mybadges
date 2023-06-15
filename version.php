@@ -17,8 +17,8 @@
 /**
  * Version details.
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,6 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2018072701;               // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires  = 2018051700;               // Requires this Moodle version (3.5).
-$plugin->component = 'block_bs_recent_badges'; // Full name of the plugin (used for diagnostics).
+$plugin->component = 'block_mybadges'; // Full name of the plugin (used for diagnostics).
 $plugin->release   = '1.3 (2018072701)';
 $plugin->maturity  = MATURITY_STABLE;

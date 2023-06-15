@@ -17,8 +17,8 @@
 /**
  * Language file for recent badges plugin.
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -40,8 +40,8 @@ $string['user'] = 'User: ';
 $string['iconsize'] = 'Size of badge icons';
 $string['latestcoursebadges'] = 'Recently awarded course badges:';
 $string['latestsystembadges'] = 'Recently awarded site badges:';
-$string['bs_recent_badges:addinstance'] = 'Add a new recent badges block';
-$string['bs_recent_badges:myaddinstance'] = 'Add a new recent badges block to Dashboard';
+$string['mybadges:addinstance'] = 'Add a new recent badges block';
+$string['mybadges:myaddinstance'] = 'Add a new recent badges block to Dashboard';
 $string['configuration'] = 'Configuration';
 $string['about'] = 'About';
 $string['donationtext'] = 'If you like this plugin and want to support my work please feel free to use this Paypal donation button:';

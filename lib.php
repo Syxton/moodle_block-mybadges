@@ -17,8 +17,8 @@
 /**
  * The library file for recent badges plugin.
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,8 +26,8 @@ require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once($CFG->libdir.'/badgeslib.php');
 require_once($CFG->libdir.'/adminlib.php');
 
-function block_bs_recent_badges_get_issued_badges($courseid, $number) {
-    global $DB;
+function block_mybadges_get_issued_badges($courseid, $number) {
+    global $DB, $USER;
 
     $params = array();
 
@@ -40,7 +40,8 @@ function block_bs_recent_badges_get_issued_badges($courseid, $number) {
                    b.*
               FROM {badge} b,
                    {badge_issued} bi
-             WHERE b.id = bi.badgeid";
+             WHERE b.id = bi.badgeid
+               AND bi.userid = '$USER->id'";
 
     if ($courseid == SITEID) {
         $sql .= ' AND b.type = 1';

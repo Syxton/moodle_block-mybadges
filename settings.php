@@ -17,8 +17,8 @@
 /**
  * Global settings for recent badges plugin.
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,28 +26,28 @@ defined('MOODLE_INTERNAL') || die;
 
 if ($hassiteconfig) {
 
-    $ADMIN->add('blocksettings', new admin_category('block_bs_recent_badges_folder',
-                get_string('pluginname', 'block_bs_recent_badges')));
+    $ADMIN->add('blocksettings', new admin_category('block_mybadges_folder',
+                get_string('pluginname', 'block_mybadges')));
 
-    $settings = new admin_settingpage('block_bs_recent_badges', get_string('configuration', 'block_bs_recent_badges'));
+    $settings = new admin_settingpage('block_mybadges', get_string('configuration', 'block_mybadges'));
 
-    $options = array('onlycourse' => get_string('onlycourse', 'block_bs_recent_badges'),
-                     'onlysystem' => get_string('onlysystem', 'block_bs_recent_badges'),
-                     'courseandsystem' => get_string('courseandsystem', 'block_bs_recent_badges'));
+    $options = array('onlycourse' => get_string('onlycourse', 'block_mybadges'),
+                     'onlysystem' => get_string('onlysystem', 'block_mybadges'),
+                     'courseandsystem' => get_string('courseandsystem', 'block_mybadges'));
 
-    $settings->add(new admin_setting_configselect('block_bs_recent_badges/allowedmodus',
-        get_string('modus', 'block_bs_recent_badges'),
-        get_string('modusinfo', 'block_bs_recent_badges'), 'courseandsystem', $options));
+    $settings->add(new admin_setting_configselect('block_mybadges/allowedmodus',
+        get_string('modus', 'block_mybadges'),
+        get_string('modusinfo', 'block_mybadges'), 'courseandsystem', $options));
 
-    $settings->add(new admin_setting_configcheckbox('block_bs_recent_badges/allownames',
-        get_string('allownamesglobal', 'block_bs_recent_badges'),
-        get_string('allownamesinfoglobal', 'block_bs_recent_badges'), 0));
+    $settings->add(new admin_setting_configcheckbox('block_mybadges/allownames',
+        get_string('allownamesglobal', 'block_mybadges'),
+        get_string('allownamesinfoglobal', 'block_mybadges'), 0));
 
-    $ADMIN->add('block_bs_recent_badges_folder', $settings);
+    $ADMIN->add('block_mybadges_folder', $settings);
 
-    $ADMIN->add('block_bs_recent_badges_folder', new admin_externalpage('block_bs_recent_badges_about',
-                get_string('about', 'block_bs_recent_badges'),
-                new moodle_url('/blocks/bs_recent_badges/about.php')));
+    $ADMIN->add('block_mybadges_folder', new admin_externalpage('block_mybadges_about',
+                get_string('about', 'block_mybadges'),
+                new moodle_url('/blocks/mybadges/about.php')));
 
     $settings = null;
 }

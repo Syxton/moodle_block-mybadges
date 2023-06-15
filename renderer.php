@@ -17,8 +17,8 @@
 /**
  * Output renderer for recent badges plugin.
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,10 +27,10 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir.'/badgeslib.php');
 require_once($CFG->libdir.'/tablelib.php');
 
-class block_bs_recent_badges_renderer extends plugin_renderer_base {
+class block_mybadges_renderer extends plugin_renderer_base {
 
     // Outputs badges lists.
-    public function bs_recent_badges_print_badges_list($badges, $userid, $courseid, $size, $allownames) {
+    public function mybadges_print_badges_list($badges, $userid, $courseid, $size, $allownames) {
         global $DB, $CFG;
 
         foreach ($badges as $badge) {
@@ -42,7 +42,7 @@ class block_bs_recent_badges_renderer extends plugin_renderer_base {
 
             $useritem = '';
             if ($allownames
-                and get_config('block_bs_recent_badges')->allownames
+                and get_config('block_mybadges')->allownames
                 and $courseid != SITEID
                 and has_capability('moodle/course:viewparticipants', $context)) {
 
@@ -54,7 +54,7 @@ class block_bs_recent_badges_renderer extends plugin_renderer_base {
                     and has_capability('moodle/course:viewparticipants', $context)) {
 
                         $userurl = new moodle_url('/user/view.php', array('id' => $badge->userid, 'course' => $courseid));
-                        $useritem = get_string('user', 'block_bs_recent_badges').
+                        $useritem = get_string('user', 'block_mybadges').
                             html_writer::link($userurl, $username, array('title' => $username));
                 }
             }

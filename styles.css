@@ -47,16 +47,16 @@ ul.recent-badges-small {
     padding-top: 8px;
 }
 
-#page-admin-blocks-bs_recent_badges-about .about-box {
+#page-admin-blocks-mybadges-about .about-box {
     margin-top: 50px;
 }
 
-#page-admin-blocks-bs_recent_badges-about .about-text,
-#page-admin-blocks-bs_recent_badges-about .donation-text {
+#page-admin-blocks-mybadges-about .about-text,
+#page-admin-blocks-mybadges-about .donation-text {
     margin-bottom: 12px;
 }
 
-#page-admin-blocks-bs_recent_badges-about .donation-button {
+#page-admin-blocks-mybadges-about .donation-button {
     margin-bottom: 8px;
 }
 

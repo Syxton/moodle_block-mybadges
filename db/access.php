@@ -17,15 +17,15 @@
 /**
  * Defines the capabilities used by recent badges plugin.
  *
- * @package    block_bs_recent_badges
- * @copyright  2015 onwards Matthias Schwabe {@link http://matthiasschwa.be}
+ * @package    block_mybadges
+ * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
-    'block/bs_recent_badges:addinstance' => array(
+    'block/mybadges:addinstance' => array(
         'captype'      => 'read',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
@@ -35,7 +35,7 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/site:manageblocks'
     ),
 
-    'block/bs_recent_badges:myaddinstance' => array(
+    'block/mybadges:myaddinstance' => array(
         'captype'      => 'read',
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes'   => array(
