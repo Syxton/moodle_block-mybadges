@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Recent badges';
+$string['pluginname'] = 'My Badges';
 $string['onlycourse'] = 'Only course badges';
 $string['onlysystem'] = 'Only site badges';
 $string['courseandsystem'] = 'Course and site badges';
@@ -35,17 +35,19 @@ $string['allownamesinfo'] = 'When activated names of participants are displayed 
 $string['numberofcoursebadges'] = 'Number of displayed course badges';
 $string['numberofsystembadges'] = 'Number of displayed site badges';
 $string['small'] = 'small';
+$string['smalloverlapping'] = 'small (overlapping)';
 $string['big'] = 'big';
+$string['bigoverlapping'] = 'big (overlapping)';
 $string['user'] = 'User: ';
 $string['iconsize'] = 'Size of badge icons';
-$string['latestcoursebadges'] = 'Recently awarded course badges:';
-$string['latestsystembadges'] = 'Recently awarded site badges:';
-$string['mybadges:addinstance'] = 'Add a new recent badges block';
-$string['mybadges:myaddinstance'] = 'Add a new recent badges block to Dashboard';
+$string['title'] = 'Title';
+$string['description'] = 'Description';
+$string['defaultdescription'] = 'My awarded course badges:';
+$string['latestsystembadges'] = 'My awarded site badges:';
+$string['mybadges:addinstance'] = 'Add a new My Badges block';
+$string['mybadges:myaddinstance'] = 'Add a new My Badges block to Dashboard';
 $string['configuration'] = 'Configuration';
 $string['about'] = 'About';
 $string['donationtext'] = 'If you like this plugin and want to support my work please feel free to use this Paypal donation button:';
-$string['abouttext'] = 'This plugin has been developed by Matthias Schwabe and is part of a Moodle badges related set of plugins.<br />Other plugins of this set are {$a->badgeenrol}, {$a->badgepool} and {$a->badgeladder}.';
-$string['aboutfeedbacktext'] = 'If you have any feedback or great ideas for new features, do not hesitate to leave a post on the {$a->aboutlink} or send me an e-mail to {$a->aboutmail}.<br /><br />';
 $string['plugindirectory'] = 'Moodle plugin directory page';
-$string['privacy:metadata'] = 'The Recent badges plugin does not store any personal data.';
+$string['privacy:metadata'] = 'The My Badges plugin does not store any personal data.';

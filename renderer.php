@@ -33,53 +33,57 @@ class block_mybadges_renderer extends plugin_renderer_base {
     public function mybadges_print_badges_list($badges, $userid, $courseid, $size, $allownames) {
         global $DB, $CFG;
 
-        foreach ($badges as $badge) {
+        if (!empty($badges)) {
+            foreach ($badges as $badge) {
 
-            $context = ($badge->type == BADGE_TYPE_SITE) ? context_system::instance() : context_course::instance($badge->courseid);
-            $name = $badge->name;
-            $imageurl = moodle_url::make_pluginfile_url($context->id, 'badges', 'badgeimage', $badge->id, '/', 'f1', false);
-            $image = html_writer::empty_tag('img', array('src' => $imageurl, 'class' => 'badge-image'));
-
-            $useritem = '';
-            if ($allownames
-                and get_config('block_mybadges')->allownames
-                and $courseid != SITEID
-                and has_capability('moodle/course:viewparticipants', $context)) {
-
-                    $badgeuser = $DB->get_record('user', array('id' => $badge->userid));
-                    $username = html_writer::tag('span', fullname($badgeuser), array('class' => 'user-name'));
-                    $useritem = $username;
-
-                if (has_capability('moodle/user:viewdetails', $context)
+                $context = ($badge->type == BADGE_TYPE_SITE) ? context_system::instance() : context_course::instance($badge->courseid);
+                $name = $badge->name;
+                $imageurl = moodle_url::make_pluginfile_url($context->id, 'badges', 'badgeimage', $badge->id, '/', 'f1', false);
+                $image = html_writer::empty_tag('img', array('src' => $imageurl, 'class' => 'badge-image'));
+    
+                $useritem = '';
+                if ($allownames
+                    and get_config('block_mybadges')->allownames
+                    and $courseid != SITEID
                     and has_capability('moodle/course:viewparticipants', $context)) {
-
-                        $userurl = new moodle_url('/user/view.php', array('id' => $badge->userid, 'course' => $courseid));
-                        $useritem = get_string('user', 'block_mybadges').
-                            html_writer::link($userurl, $username, array('title' => $username));
+    
+                        $badgeuser = $DB->get_record('user', array('id' => $badge->userid));
+                        $username = html_writer::tag('span', fullname($badgeuser), array('class' => 'user-name'));
+                        $useritem = $username;
+    
+                    if (has_capability('moodle/user:viewdetails', $context)
+                        and has_capability('moodle/course:viewparticipants', $context)) {
+    
+                            $userurl = new moodle_url('/user/view.php', array('id' => $badge->userid, 'course' => $courseid));
+                            $useritem = get_string('user', 'block_mybadges').
+                                html_writer::link($userurl, $username, array('title' => $username));
+                    }
                 }
+    
+                if (!empty($badge->dateexpire) && $badge->dateexpire < time()) {
+                    $image .= $this->output->pix_icon('i/expired',
+                        get_string('expireddate', 'badges', userdate($badge->dateexpire)), 'moodle',
+                            array('class' => 'expireimage'));
+                    $name .= ' (' . get_string('expired', 'badges') . ')';
+                }
+    
+                $badgeparams = ($courseid == SITEID) ? array('type' => 1) : array('type' => 2, 'id' => $courseid);
+                $badgeurl = new moodle_url('/badges/view.php', $badgeparams);
+    
+                $title = html_writer::tag('span', $name, array('class' => 'badge-title'));
+                if ($size == 'small') {
+                    $item = html_writer::tag('div', $image.' '.$title, array('class' => 'badge-item'));
+                } else {
+                    $item = html_writer::tag('div', $image, array('class' => 'badge-item')).
+                        html_writer::tag('div', $title, array('class' => 'badge-item'));
+                }
+                $badgeitem = html_writer::link($badgeurl, $item, array('title' => $name));
+                $items[] = $badgeitem.$useritem;
             }
-
-            if (!empty($badge->dateexpire) && $badge->dateexpire < time()) {
-                $image .= $this->output->pix_icon('i/expired',
-                    get_string('expireddate', 'badges', userdate($badge->dateexpire)), 'moodle',
-                        array('class' => 'expireimage'));
-                $name .= ' (' . get_string('expired', 'badges') . ')';
-            }
-
-            $badgeparams = ($courseid == SITEID) ? array('type' => 1) : array('type' => 2, 'id' => $courseid);
-            $badgeurl = new moodle_url('/badges/view.php', $badgeparams);
-
-            $title = html_writer::tag('span', $name, array('class' => 'badge-title'));
-            if ($size == 'small') {
-                $item = html_writer::tag('div', $image.' '.$title, array('class' => 'badge-item'));
-            } else {
-                $item = html_writer::tag('div', $image, array('class' => 'badge-item')).
-                    html_writer::tag('div', $title, array('class' => 'badge-item'));
-            }
-            $badgeitem = html_writer::link($badgeurl, $item, array('title' => $name));
-            $items[] = $badgeitem.$useritem;
+        } else {
+            $items = "<p>No badges awarded.</p>";
         }
 
-        return html_writer::alist($items, array('class' => 'recent-badges-'.$size));
+        return html_writer::alist($items, array('class' => 'my-badges-'.$size));
     }
 }

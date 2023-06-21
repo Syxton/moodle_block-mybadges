@@ -29,8 +29,11 @@ class block_mybadges_edit_form extends block_edit_form {
 
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
-        $mform->addElement('text', 'title', get_string('configtitle', 'block_html'));
-        $mform->setType('title', PARAM_TEXT);
+        $mform->addElement('text', 'config_title', get_string('title', 'block_mybadges'));
+        $mform->setType('config_title', PARAM_TEXT);
+
+        $mform->addElement('text', 'config_description', get_string('description', 'block_mybadges'));
+        $mform->setType('config_description', PARAM_TEXT);
     
         if (get_config('block_mybadges')->allowedmodus != 'onlysystem' and $COURSE->id != SITEID) {
 
@@ -50,7 +53,6 @@ class block_mybadges_edit_form extends block_edit_form {
         }
 
         if (get_config('block_mybadges')->allowedmodus != 'onlycourse') {
-
             $numberofsystembadges = array();
             for ($i = 0; $i <= 25; $i++) {
                 $numberofsystembadges[$i] = $i;
@@ -62,9 +64,9 @@ class block_mybadges_edit_form extends block_edit_form {
 
         $iconsize = array(
             'small' => get_string('small', 'block_mybadges'),
-            'small overlapping' => get_string('smalloverlapping', 'block_mybadges'),
+            'smalloverlapping' => get_string('smalloverlapping', 'block_mybadges'),
             'big' => get_string('big', 'block_mybadges'),
-            'big overlapping' => get_string('bigoverlapping', 'block_mybadges')
+            'bigoverlapping' => get_string('bigoverlapping', 'block_mybadges')
         );
         $mform->addElement('select', 'config_iconsize',
                            get_string('iconsize', 'block_mybadges'), $iconsize);
