@@ -52,6 +52,9 @@
     z-index: 2;
     margin-left: -100px;
 }
+.my-badges-combined {
+    text-align: center;
+}
 .my-badges-big span.badge-name,
 .my-badges-small span.badge-name {
     white-space: nowrap;

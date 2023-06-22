@@ -74,8 +74,8 @@ class block_mybadges_edit_form extends block_edit_form {
 
         $iconsize = array(
             'small' => get_string('small', 'block_mybadges'),
-            'smalloverlapping' => get_string('smalloverlapping', 'block_mybadges'),
             'big' => get_string('big', 'block_mybadges'),
+            'smalloverlapping' => get_string('smalloverlapping', 'block_mybadges'),
             'bigoverlapping' => get_string('bigoverlapping', 'block_mybadges')
         );
         $mform->addElement('select', 'config_iconsize',

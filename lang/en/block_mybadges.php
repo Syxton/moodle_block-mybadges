@@ -39,6 +39,7 @@ $string['defaultdescription'] = 'My awarded course badges:';
 $string['description'] = 'Description';
 $string['donationtext'] = 'If you like this plugin and want to support my work please feel free to use this Paypal donation button:';
 $string['everyuser'] = 'Every user';
+$string['allparticipants'] = 'Earned by all participants';
 $string['iconsize'] = 'Size of badge icons';
 $string['latestsystembadges'] = 'My awarded site badges:';
 $string['singleuser'] = 'Single user';

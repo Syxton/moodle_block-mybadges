@@ -161,8 +161,7 @@ class block_mybadges extends block_base {
             $output = $this->page->get_renderer('block_mybadges');
             $description = $this->config->description ?: get_string('defaultdescription', 'block_mybadges');
             $this->content->text .= html_writer::tag('div', $description, array('class' => 'my-badges-description'));
-            $this->content->text .= $output->mybadges_print_badges_list($coursebadges, $USER->id, $courseid,
-                $this->config->iconsize, $this->config->allownames);
+            $this->content->text .= $output->mybadges_print_badges_list($coursebadges, $USER->id, $courseid, $this->config);
         }
 
         if (get_config('block_mybadges')->allowedmodus != 'onlycourse' &&
@@ -172,8 +171,7 @@ class block_mybadges extends block_base {
             $output = $this->page->get_renderer('block_mybadges');
             $this->content->text .= html_writer::tag('div', get_string('latestsystembadges', 'block_mybadges'),
                 array('class' => 'my-badges-latestsystembadges'));
-            $this->content->text .= $output->mybadges_print_badges_list($systembadges, $USER->id, SITEID,
-                $this->config->iconsize, $this->config->allownames);
+            $this->content->text .= $output->mybadges_print_badges_list($systembadges, $USER->id, SITEID, $this->config);
 
         }
 

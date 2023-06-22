@@ -40,12 +40,14 @@ class block_mybadges_renderer extends plugin_renderer_base {
      * @param array $badges All collected badges.
      * @param int $userid Current viewing user ID.
      * @param int $courseid Moodle course ID or SITEID.
-     * @param string $size Config variable deciding how badge is styled.
-     * @param bool $allownames Config variable that turns student names on/off.
+     * @param object $config All config variables.
      * @return string HTML of badge list.
      */
-    public function mybadges_print_badges_list($badges, $userid, $courseid, $size, $allownames) {
+    public function mybadges_print_badges_list($badges, $userid, $courseid, $config) {
         global $DB, $CFG;
+
+        $earnedby = get_string('user', 'block_mybadges');
+        $overalluseritem = '';
         $items = array();
         if (!empty($badges)) {
             foreach ($badges as $badge) {
@@ -59,25 +61,6 @@ class block_mybadges_renderer extends plugin_renderer_base {
                 $imageurl = moodle_url::make_pluginfile_url($context->id, 'badges', 'badgeimage', $badge->id, '/', 'f1', false);
                 $image = html_writer::empty_tag('img', array('src' => $imageurl, 'class' => 'badge-image'));
 
-                $useritem = '';
-                if ($allownames
-                    && get_config('block_mybadges')->allownames
-                    && $courseid != SITEID
-                    && has_capability('moodle/course:viewparticipants', $context)) {
-
-                        $badgeuser = $DB->get_record('user', array('id' => $badge->userid));
-                        $username = html_writer::tag('span', fullname($badgeuser), array('class' => 'user-name'));
-                        $useritem = $username;
-
-                    if (has_capability('moodle/user:viewdetails', $context)
-                        && has_capability('moodle/course:viewparticipants', $context)) {
-
-                            $userurl = new moodle_url('/user/view.php', array('id' => $badge->userid, 'course' => $courseid));
-                            $useritem = get_string('user', 'block_mybadges').
-                                html_writer::link($userurl, $username, array('title' => $username));
-                    }
-                }
-
                 if (!empty($badge->dateexpire) && $badge->dateexpire < time()) {
                     $image .= $this->output->pix_icon('i/expired',
                         get_string('expireddate', 'badges', userdate($badge->dateexpire)), 'moodle',
@@ -89,17 +72,48 @@ class block_mybadges_renderer extends plugin_renderer_base {
                 $badgeurl = new moodle_url('/badges/view.php', $badgeparams);
 
                 $title = html_writer::tag('span', $name, array('class' => 'badge-title'));
-                if ($size == 'small') {
+                if ($config->iconsize == 'small') {
                     $item = html_writer::tag('div', $image.' '.$title, array('class' => 'badge-item'));
                 } else {
                     $item = html_writer::tag('div', $image, array('class' => 'badge-item')).
                         html_writer::tag('div', $title, array('class' => 'badge-item'));
                 }
                 $badgeitem = html_writer::link($badgeurl, $item, array('title' => $name));
-                $items[] = $badgeitem.$useritem;
+
+                $useritem = '';
+                if ($config->allownames &&
+                    $courseid != SITEID &&
+                    has_capability('moodle/course:viewparticipants', $context)) {
+
+                        $badgeuser = $DB->get_record('user', array('id' => $badge->userid));
+                        $username = html_writer::tag('span', fullname($badgeuser), array('class' => 'user-name'));
+                        $useritem = $username;
+
+                    if (has_capability('moodle/user:viewdetails', $context) &&
+                        has_capability('moodle/course:viewparticipants', $context)) {
+
+                            $userurl = new moodle_url('/user/view.php', array('id' => $badge->userid, 'course' => $courseid));
+                            $useritem = html_writer::link($userurl, $username, array('title' => $username));
+                    }
+                }
+                // Decide whether to show the name of badge earner or not.
+                if ($config->iconsize == "smalloverlapping" || $config->iconsize == "bigoverlapping") {
+                    if ($config->allownames) {
+                        if ($config->onlymybadges == "singleuser") {
+                            $overalluseritem = $earnedby . $useritem;
+                        } else {
+                            $overalluseritem = get_string('allparticipants', 'block_mybadges');
+                        }
+                        $overalluseritem = html_writer::tag('div', $overalluseritem, array('class' => 'my-badges-combined'));
+                    }
+                    $items[] = $badgeitem;
+                } else {
+                    $useritem = empty($useritem) ? '' : $earnedby . $useritem;
+                    $items[] = $badgeitem . $useritem;
+                }
             }
         }
 
-        return html_writer::alist($items, array('class' => 'my-badges-'.$size));
+        return html_writer::alist($items, array('class' => 'my-badges-' . $config->iconsize)) . $overalluseritem;
     }
 }
