@@ -24,8 +24,6 @@
 
 namespace block_mybadges\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy Subsystem for block_mybadges implementing null_provider.
  */

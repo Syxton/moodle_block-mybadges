@@ -14,10 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-use core_external\util as external_util;
-
 /**
- * Main file of recent badges plugin. Displays recently awarded badges.
+ * The library file for recent badges plugin.
  *
  * @package    block_mybadges
  * @copyright  2023 Matthew Davidson
@@ -26,33 +24,58 @@ use core_external\util as external_util;
 
 defined('MOODLE_INTERNAL') || die();
 
+use core_external\util as external_util;
 require_once(dirname(__FILE__).'/lib.php');
 
 /**
- * Displays recent badges
+ * Configures and displays the block.
+ *
+ * @copyright  2023 Matthew Davidson
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_mybadges extends block_base {
-
+    /** @var string optional text that displays inside the block above the badges. */
     public $description;
 
-    function init() {
+    /**
+     * Initialize the plugin. This method is being called by the parent constructor by default.
+     */
+    public function init() {
         $this->title = get_string('pluginname', 'block_mybadges');
         $this->description = get_string('defaultdescription', 'block_mybadges');
     }
 
-    function instance_allow_multiple() {
+    /**
+     * No need to have multiple blocks to perform the same functionality
+     */
+    public function instance_allow_multiple() {
         return true;
     }
 
-    function has_config() {
+    /**
+     * Has config function.
+     *
+     * @see block_base::has_config()
+     */
+    public function has_config() {
         return true;
     }
 
-    function instance_allow_config() {
+    /**
+     * Allow per instance configurrations.
+     *
+     * @return boolean
+     */
+    public function instance_allow_config() {
         return true;
     }
 
-    function applicable_formats() {
+    /**
+     * Add custom html attributes to aid with theming and styling
+     *
+     * @return array
+     */
+    public function applicable_formats() {
         return array(
                 'admin' => false,
                 'site-index' => true,
@@ -62,21 +85,30 @@ class block_mybadges extends block_base {
         );
     }
 
-    function specialization() {
+    /**
+     * Alter the title and descriptions of the instance of the block.
+     *
+     */
+    public function specialization() {
         if (isset($this->config->title)) {
-            $this->title = $this->title = format_string($this->config->title, true, ['context' => $this->context]);
+            $this->title = format_string($this->config->title, true, ['context' => $this->context]);
         } else {
             $this->title = get_string('pluginname', 'block_mybadges');
         }
 
         if (isset($this->config->description)) {
-            $this->description = $this->description = format_string($this->config->description, true, ['context' => $this->context]);
+            $this->description = format_string($this->config->description, true, ['context' => $this->context]);
         } else {
             $this->description = get_string('defaultdescription', 'block_mybadges');
         }
     }
 
-    function get_content() {
+    /**
+     * Sets up the content of the block for display to the user.
+     *
+     * @return stdClass The HTML content of the block.
+     */
+    public function get_content(): stdClass {
         global $USER, $COURSE, $CFG;
 
         if ($this->content !== null) {
@@ -121,22 +153,21 @@ class block_mybadges extends block_base {
             $courseid = null;
         }
 
-        if (get_config('block_mybadges')->allowedmodus != 'onlysystem'
-            and $this->config->numberofcoursebadges > 0
-            and $coursebadges = block_mybadges_get_issued_badges($courseid, $this->config->numberofcoursebadges)
-            and $COURSE->id != SITEID) {
+        if (get_config('block_mybadges')->allowedmodus != 'onlysystem' &&
+            $courseid != SITEID &&
+            $this->config->numberofcoursebadges > 0 &&
+            $coursebadges = block_mybadges_get_issued_badges($courseid, $this->config)) {
 
             $output = $this->page->get_renderer('block_mybadges');
             $description = $this->config->description ?: get_string('defaultdescription', 'block_mybadges');
             $this->content->text .= html_writer::tag('div', $description, array('class' => 'my-badges-description'));
             $this->content->text .= $output->mybadges_print_badges_list($coursebadges, $USER->id, $courseid,
                 $this->config->iconsize, $this->config->allownames);
-
         }
 
-        if (get_config('block_mybadges')->allowedmodus != 'onlycourse'
-            and $this->config->numberofsystembadges > 0
-            and $systembadges = block_mybadges_get_issued_badges(SITEID, $this->config->numberofsystembadges)) {
+        if (get_config('block_mybadges')->allowedmodus != 'onlycourse' &&
+            $this->config->numberofsystembadges > 0 &&
+            $systembadges = block_mybadges_get_issued_badges(SITEID, $this->config)) {
 
             $output = $this->page->get_renderer('block_mybadges');
             $this->content->text .= html_writer::tag('div', get_string('latestsystembadges', 'block_mybadges'),
@@ -146,9 +177,9 @@ class block_mybadges extends block_base {
 
         }
 
+        if (!$coursebadges && !$systembadges) {
+            $this->content->text = html_writer::tag('div', get_string('nobadgesfound', 'block_mybadges'));
+        }
         return $this->content;
     }
-    function _self_test() {
-        return true;
-      }
 }

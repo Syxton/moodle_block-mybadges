@@ -22,8 +22,18 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Form for editing mybadges block instances.
+ *
+ * @copyright 2023 Matthew Davidson
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class block_mybadges_edit_form extends block_edit_form {
-
+    /**
+     * Form page definitions.
+     *
+     * @param object $mform Moodle form.
+     */
     protected function specific_definition($mform) {
         global $COURSE;
 
@@ -34,8 +44,8 @@ class block_mybadges_edit_form extends block_edit_form {
 
         $mform->addElement('text', 'config_description', get_string('description', 'block_mybadges'));
         $mform->setType('config_description', PARAM_TEXT);
-    
-        if (get_config('block_mybadges')->allowedmodus != 'onlysystem' and $COURSE->id != SITEID) {
+
+        if (get_config('block_mybadges')->allowedmodus != 'onlysystem' && $COURSE->id != SITEID) {
 
             $numberofcoursebadges = array();
             for ($i = 0; $i <= 25; $i++) {
@@ -71,5 +81,13 @@ class block_mybadges_edit_form extends block_edit_form {
         $mform->addElement('select', 'config_iconsize',
                            get_string('iconsize', 'block_mybadges'), $iconsize);
         $mform->setDefault('config_iconsize', 'small');
+
+        $onlymybadges = array(
+            'singleuser' => get_string('singleuser', 'block_mybadges'),
+            'everyuser' => get_string('everyuser', 'block_mybadges')
+        );
+        $mform->addElement('select', 'config_onlymybadges',
+                           get_string('onlymybadges', 'block_mybadges'), $onlymybadges);
+        $mform->setDefault('config_onlymybadges', 'singleuser');
     }
 }

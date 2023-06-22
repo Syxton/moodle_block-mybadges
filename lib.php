@@ -15,19 +15,32 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The library file for recent badges plugin.
+ * The library file for my badges plugin.
  *
  * @package    block_mybadges
  * @copyright  2023 Matthew Davidson
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
+defined('MOODLE_INTERNAL') || die;
+
 require_once($CFG->libdir.'/badgeslib.php');
 require_once($CFG->libdir.'/adminlib.php');
 
-function block_mybadges_get_issued_badges($courseid, $number) {
+/**
+ * Gather badges for all users or a single user in a course or from SITEID.
+ *
+ * @param int $courseid The courseid of the course or SITEID.
+ * @param object $config All instance config variables.
+ * @return array $badges Badges found in query.
+ */
+function block_mybadges_get_issued_badges($courseid, $config) {
     global $DB, $USER;
+
+    $usersql = "";
+    if ($config->onlymybadges == "singleuser") {
+        $usersql = "AND bi.userid = '$USER->id'";
+    }
 
     $params = array();
 
@@ -41,7 +54,7 @@ function block_mybadges_get_issued_badges($courseid, $number) {
               FROM {badge} b,
                    {badge_issued} bi
              WHERE b.id = bi.badgeid
-               AND bi.userid = '$USER->id'";
+             $usersql";
 
     if ($courseid == SITEID) {
         $sql .= ' AND b.type = 1';
@@ -52,7 +65,7 @@ function block_mybadges_get_issued_badges($courseid, $number) {
 
     $sql .= ' ORDER BY bi.dateissued DESC';
 
-    $badges = $DB->get_records_sql($sql, $params, 0, $number);
+    $badges = $DB->get_records_sql($sql, $params, 0, $config->numberofcoursebadges);
 
     return $badges;
 }

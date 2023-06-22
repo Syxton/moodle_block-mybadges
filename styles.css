@@ -56,8 +56,11 @@
     white-space: nowrap;
 }
 ul.my-badges-big,
-ul.my-badges-small {
-    padding-top: 8px;
+ul.my-badges-small,
+ul.my-badges-smalloverlapping,
+ul.my-badges-bigoverlapping {
+    padding: 20px 0 0 0;
+    margin: 0;
 }
 
 #page-admin-blocks-bs_recent_badges-about .about-box {
@@ -92,7 +95,6 @@ ul.my-badges-bigoverlapping>* {
 
 ul.my-badges-smalloverlapping, ul.my-badges-bigoverlapping {
     display: grid;
-    padding: 0;
     justify-items: center;
 }
 
