@@ -1,53 +1,54 @@
 .my-badges-big li {
     list-style-type: none;
-    text-align: center !important;
-    padding-bottom: 16px !important;
+    text-align: center;
+    padding-bottom: 16px;
 }
 .my-badges-small li {
     list-style-type: none;
-    text-align: left !important;
-    padding-bottom: 16px !important;
+    text-align: left;
+    padding-bottom: 16px;
 }
 .my-badges-bigoverlapping li {
     list-style-type: none;
-    text-align: center !important;
-    padding-bottom: 16px !important;
+    text-align: center;
+    padding-bottom: 16px;
 }
 .my-badges-smalloverlapping li {
     list-style-type: none;
-    text-align: left !important;
-    padding-bottom: 16px !important;
+    text-align: left;
+    padding-bottom: 16px;
 }
-.my-badges-smalloverlapping .badge-title, .my-badges-bigoverlapping .badge-title {
+.my-badges-smalloverlapping .badge-title,
+.my-badges-bigoverlapping .badge-title {
     display: none;
 }
 .my-badges-small li .badge-image {
     width: 25px;
     height: 25px;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     z-index: 1;
 }
 .my-badges-big li .badge-image {
     width: 100px;
     height: 100px;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     z-index: 1;
 }
 .my-badges-small li img.expireimage {
     width: 25px;
     height: 25px;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     z-index: 2;
     margin-left: -25px;
 }
 .my-badges-big li img.expireimage {
     width: 100px;
     height: 100px;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     z-index: 2;
     margin-left: -100px;
 }
@@ -81,24 +82,26 @@ ul.my-badges-bigoverlapping {
     margin-bottom: 4px;
 }
 
-ul.my-badges-smalloverlapping>* {
+ul.my-badges-smalloverlapping > * {
     grid-row-start: 1;
     grid-column-start: 1;
     width: 40%;
 }
 
-ul.my-badges-bigoverlapping>* {
+ul.my-badges-bigoverlapping > * {
     grid-row-start: 1;
     grid-column-start: 1;
     width: 80%;
 }
 
-ul.my-badges-smalloverlapping, ul.my-badges-bigoverlapping {
+ul.my-badges-smalloverlapping,
+ul.my-badges-bigoverlapping {
     display: grid;
     justify-items: center;
 }
 
-.my-badges-smalloverlapping li .badge-image, .my-badges-bigoverlapping li .badge-image {
+.my-badges-smalloverlapping li .badge-image,
+.my-badges-bigoverlapping li .badge-image {
     width: 100%;
     height: unset;
 }
