@@ -164,6 +164,7 @@ class block_mybadges extends block_base {
             $this->content->text .= $output->mybadges_print_badges_list($coursebadges, $USER->id, $courseid, $this->config);
         }
 
+        $systembadges = false;
         if (get_config('block_mybadges')->allowedmodus != 'onlycourse' &&
             $this->config->numberofsystembadges > 0 &&
             $systembadges = block_mybadges_get_issued_badges(SITEID, $this->config)) {
